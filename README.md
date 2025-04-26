@@ -84,16 +84,22 @@ _Votre réponse pour l'exercice 2 :_
 ### Exercice 3 : Optimisation et Context
 #### Objectif : Gérer le thème global et optimiser les rendus
 
-- [ ] 3.1 Créer le `ThemeContext` pour gérer le thème clair/sombre
-- [ ] 3.2 Implémenter le composant `ThemeToggle`
-- [ ] 3.3 Utiliser `useCallback` et `useMemo` pour optimiser les performances
-- [ ] 3.4 Documenter votre solution ici
+- [x] 3.1 Créer le `ThemeContext` pour gérer le thème clair/sombre
+- [x] 3.2 Implémenter le composant `ThemeToggle`
+- [x] 3.3 Utiliser `useCallback` et `useMemo` pour optimiser les performances
+- [x] 3.4 Documenter votre solution ici
 
 _Votre réponse pour l'exercice 3 :_
 ```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
+ - 3.1 : Ajout de `ThemeContext` avec `useLocalStorage` pour persister le thème, fonction `toggleTheme`, et hook `useTheme` dans `ThemeContext.js`.
+ - 3.2 : Ajout du composant `ThemeToggle` avec `useTheme` pour basculer entre les thèmes clair/sombre et affichage des icônes lune/soleil dans `ThemeToggle.js`.
+ - 3.3 : Ajout de `useCallback` pour les gestionnaires (`handlePostClick`, `handleTagClick`, `handleSearchChange`), `useMemo` pour les classes de thème dans `PostDetails.js`, `React.memo` pour optimiser les rendus, et application du thème (`bg-dark`, `text-light`) dans `PostList.js`, `PostSearch.js`, `LoadingSpinner.js`, `PostDetails.js`, `App.js`, et `usePosts.js`.
 ```
+**📸 Screenshots:**
+
+ ![pic4](./public/Screenshots/pic4.png)
+ ![pic5](./public/Screenshots/pic5.png)
+---
 
 ### Exercice 4 : Fonctionnalités avancées
 #### Objectif : Ajouter des fonctionnalités de chargement et détail

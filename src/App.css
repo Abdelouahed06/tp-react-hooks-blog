@@ -54,4 +54,12 @@ body,
   opacity: 0.8;
 }
 
-/* TODO: Exercice 3 - Ajouter des styles spécifiques au mode sombre */
+/* Exercice 3 - Ajouter des styles spécifiques au mode sombre */
+
+.bg-dark {
+  background-color: #343a40 !important;
+}
+
+.text-light {
+  color: #f8f9fa !important;
+}

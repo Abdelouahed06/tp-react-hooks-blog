@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-// TODO: Exercice 3 - Importer useTheme
+import React, { useState, useCallback} from 'react';
+// Exercice 3 - Importer useTheme
+import { useTheme } from '../context/ThemeContext';
 
 /**
  * Composant de recherche de posts
@@ -17,23 +18,25 @@ function PostSearch({
 }) {
   const [searchInput, setSearchInput] = useState('');
   
-  // TODO: Exercice 3 - Utiliser le hook useTheme
+  // Exercice 3 - Utiliser le hook useTheme
+  const { theme } = useTheme();
   
-  // TODO: Exercice 3 - Utiliser useCallback pour optimiser le gestionnaire
-  const handleSearchChange = (e) => {
+  // Exercice 3 - Utiliser useCallback pour optimiser le gestionnaire
+  const handleSearchChange = useCallback((e) => {
     const value = e.target.value;
     setSearchInput(value);
     onSearch(value);
-  };
+  }, [onSearch]);
   
-  // TODO: Exercice 3 - Appliquer les classes CSS en fonction du thème
-  const themeClasses = '';
+  // Exercice 3 - Appliquer les classes CSS en fonction du thème
+  const themeClasses = theme === 'dark' ? 'bg-dark text-light' : '';
+
   
   return (
     <div className="mb-4">
       <div className="row">
         <div className="col-md-8 mb-3 mb-md-0">
-          <div className="input-group">
+          <div className={`input-group ${themeClasses}`}>
             <span className="input-group-text">
               <i className="bi bi-search"></i>
             </span>
@@ -45,10 +48,10 @@ function PostSearch({
               onChange={handleSearchChange}
               aria-label="Rechercher"
             />
-            {/* TODO: Exercice 1 - Ajouter le bouton pour effacer la recherche */}
+            {/* Exercice 1 - Ajouter le bouton pour effacer la recherche */}
             {searchInput && (
               <button
-                className="btn btn-outline-secondary"
+                className={`btn btn-outline-${theme === 'dark' ? 'light' : 'secondary'}`}
                 type="button"
                 onClick={() => {
                   setSearchInput('');
@@ -67,5 +70,5 @@ function PostSearch({
   );
 }
 
-// TODO: Exercice 3 - Utiliser React.memo pour optimiser les rendus
-export default PostSearch;
+// Exercice 3 - Utiliser React.memo pour optimiser les rendus
+export default React.memo(PostSearch);
