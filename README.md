@@ -4,13 +4,13 @@ Ce TP a pour objectif de mettre en pratique l'utilisation des Hooks React (useSt
 
 ## Installation et configuration initiale
 
-1. Cloner le dépôt :
+1. Cloner le dépôt : ✅
 ```bash
 git clone https://github.com/pr-daaif/tp-react-hooks-blog.git
 cd tp-react-hooks-blog
 ```
 
-2. Créer votre propre dépôt sur Github et changer le remote :
+2. Créer votre propre dépôt sur Github et changer le remote : ✅
 ```bash
 # Supprimer le remote origine
 git remote remove origin
@@ -22,12 +22,12 @@ git remote add origin https://github.com/[votre-username]/tp-react-hooks-blog.gi
 git push -u origin main
 ```
 
-3. Installer les dépendances :
+3. Installer les dépendances : ✅
 ```bash
 npm install
 ```
 
-4. Lancer l'application :
+4. Lancer l'application : ✅
 ```bash
 npm start
 ```
