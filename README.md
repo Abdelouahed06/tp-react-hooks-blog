@@ -69,15 +69,16 @@ _Votre réponse pour l'exercice 1 :_
 ### Exercice 2 : Hooks Personnalisés
 #### Objectif : Créer des hooks réutilisables
 
-- [ ] 2.1 Créer le hook `useDebounce` pour optimiser la recherche
-- [ ] 2.2 Créer le hook `useLocalStorage` pour persister les préférences utilisateur
-- [ ] 2.3 Utiliser ces hooks dans l'application
-- [ ] 2.4 Documenter votre solution ici
+- [x] 2.1 Créer le hook `useDebounce` pour optimiser la recherche
+- [x] 2.2 Créer le hook `useLocalStorage` pour persister les préférences utilisateur
+- [x] 2.3 Utiliser ces hooks dans l'application
+- [x] 2.4 Documenter votre solution ici
 
 _Votre réponse pour l'exercice 2 :_
 ```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
+ - 2.1 : Ajout des états de débounce, logique de `useEffect`, et retour de la valeur débouncée dans `useDebounce.js`.
+ - 2.2 : Ajout des états de stockage, mise à jour de `localStorage`, et retour de la valeur/fonction dans `useLocalStorage.js`.
+ - 2.3 : Ajout de l'importation et utilisation de `useDebounce` dans `usePosts.js`, et de `useLocalStorage` dans `App.js` pour gérer `infiniteScroll`.
 ```
 
 ### Exercice 3 : Optimisation et Context

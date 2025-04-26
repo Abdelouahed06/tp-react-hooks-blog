@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-// TODO: Exercice 2 - Importer useDebounce
+//  Exercice 2 - Importer useDebounce
+import useDebounce from './useDebounce';
 
 /**
  * Hook personnalisé pour gérer les posts du blog
@@ -16,14 +17,15 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // TODO: Exercice 1 - Ajouter les états nécessaires pour la pagination
+  // Exercice 1 - Ajouter les états nécessaires pour la pagination
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   
   // TODO: Exercice 4 - Ajouter l'état pour le post sélectionné
   
-  // TODO: Exercice 2 - Utiliser useDebounce pour le terme de recherche
+  // Exercice 2 - Utiliser useDebounce pour le terme de recherche
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   
   // TODO: Exercice 3 - Utiliser useCallback pour construire l'URL de l'API
   const buildApiUrl = (skip = 0) => {
@@ -31,7 +33,7 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
     return 'https://dummyjson.com/posts';
   };
   
-  // TODO: Exercice 1 - Implémenter la fonction pour charger les posts
+  // Exercice 1 - Implémenter la fonction pour charger les posts
   const fetchPosts = async (reset = false) => {
     try {
       setLoading(true);
@@ -52,10 +54,10 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
     }
   };
   
-  // TODO: Exercice 1 - Utiliser useEffect pour charger les posts quand les filtres changent
+  // Exercice 1 - Utiliser useEffect pour charger les posts quand les filtres changent
   useEffect(() => {
     fetchPosts(true);
-  }, [searchTerm, limit]);
+  }, [debouncedSearchTerm, limit]);
   
   // TODO: Exercice 4 - Implémenter la fonction pour charger plus de posts
   

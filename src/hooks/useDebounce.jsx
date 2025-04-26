@@ -7,12 +7,21 @@ import { useState, useEffect } from 'react';
  * @returns {any} La valeur après le délai
  */
 function useDebounce(value, delay = 500) {
-  // TODO: Exercice 2 - Implémenter le hook useDebounce
+  // Exercice 2 - Implémenter le hook useDebounce
   // 1. Créer un état pour stocker la valeur debouncée
-  // 2. Utiliser useEffect pour mettre à jour la valeur après le délai
-  // 3. Retourner la valeur debouncée
+  const [debouncedValue, setDebouncedValue] = useState(value);
   
-  return value; // À modifier
+  // 2. Utiliser useEffect pour mettre à jour la valeur après le délai
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  
+  // 3. Retourner la valeur debouncée
+  return debouncedValue;
 }
 
 export default useDebounce;
