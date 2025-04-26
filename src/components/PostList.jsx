@@ -42,10 +42,37 @@ function PostList({
   };
   
   // TODO: Exercice 1 - Gérer le cas où il n'y a pas de posts
+  if (!loading && posts.length === 0) {
+    return <div className="alert alert-info">Aucun article trouvé.</div>;
+  }
   
   return (
     <div className="post-list">
       {/* TODO: Exercice 1 - Afficher la liste des posts */}
+      {posts.map(post => (
+        <div
+          key={post.id}
+          className="card mb-3"
+          onClick={() => handlePostClick(post)}
+          style={{ cursor: 'pointer' }}
+        >
+          <div className="card-body">
+            <h5 className="card-title">{post.title}</h5>
+            <p className="card-text">{post.body.substring(0, 100)}...</p>
+            <div>
+              {post.tags?.map(tag => (
+                <span
+                  key={tag}
+                  className="badge bg-secondary me-1"
+                  onClick={(e) => handleTagClick(e, tag)}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
       
       {/* Afficher le spinner de chargement */}
       {loading && <LoadingSpinner />}
@@ -53,6 +80,14 @@ function PostList({
       {/* TODO: Exercice 4 - Ajouter la référence pour le défilement infini */}
       
       {/* TODO: Exercice 1 - Ajouter le bouton "Charger plus" pour le mode non-infini */}
+      {!infiniteScroll && hasMore && !loading && (
+        <button
+          className="btn btn-primary mt-3"
+          onClick={onLoadMore}
+        >
+          Charger plus
+        </button>
+      )}
     </div>
   );
 }
