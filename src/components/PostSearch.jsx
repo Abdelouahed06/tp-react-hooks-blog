@@ -1,4 +1,4 @@
-import React, { useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 // Exercice 3 - Importer useTheme
 import { useTheme } from '../context/ThemeContext';
 
@@ -31,7 +31,6 @@ function PostSearch({
   // Exercice 3 - Appliquer les classes CSS en fonction du thème
   const themeClasses = theme === 'dark' ? 'bg-dark text-light' : '';
 
-  
   return (
     <div className="mb-4">
       <div className="row">
@@ -64,7 +63,22 @@ function PostSearch({
           </div>
         </div>
         
-        {/* TODO: Exercice 4 - Ajouter le sélecteur de tags */}
+        {/* Exercice 4 - Ajouter le sélecteur de tags */}
+        <div className="col-md-4">
+          <select
+            className={`form-select ${themeClasses}`}
+            value={selectedTag}
+            onChange={(e) => onTagSelect(e.target.value)}
+            aria-label="Filtrer par tag"
+          >
+            <option value="">Tous les tags</option>
+            {availableTags.map(tag => (
+              <option key={tag.slug} value={tag.slug}>
+                {tag.name || tag.slug}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </div>
   );

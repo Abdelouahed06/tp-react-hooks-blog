@@ -1,8 +1,9 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 // Exercice 3 - Importer useTheme
 import { useTheme } from '../context/ThemeContext';
 
-// TODO: Exercice 4 - Importer useIntersectionObserver
+// Exercice 4 - Importer useIntersectionObserver
+import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import LoadingSpinner from './LoadingSpinner';
 
 /**
@@ -28,8 +29,17 @@ function PostList({
   // Exercice 3 - Utiliser le hook useTheme
   const { theme } = useTheme();
   
-  // TODO: Exercice 4 - Utiliser useIntersectionObserver pour le défilement infini
-  
+  // Exercice 4 - Utiliser useIntersectionObserver pour le défilement infini
+  const [sentinelRef, isIntersecting] = useIntersectionObserver({
+    enabled: infiniteScroll && hasMore && !loading
+  });
+
+  useEffect(() => {
+    if (isIntersecting && hasMore && !loading) {
+      onLoadMore();
+    }
+  }, [isIntersecting, hasMore, loading, onLoadMore]);
+
   // Exercice 3 - Utiliser useCallback pour les gestionnaires d'événements
   const handlePostClick = useCallback((post) => {
     if (onPostClick) {
@@ -80,8 +90,10 @@ function PostList({
       {/* Afficher le spinner de chargement */}
       {loading && <LoadingSpinner />}
       
-      {/* TODO: Exercice 4 - Ajouter la référence pour le défilement infini */}
-      
+      {/* Exercice 4 - Ajouter la référence pour le défilement infini */}
+      {infiniteScroll && hasMore && !loading && (
+        <div ref={sentinelRef} style={{ height: '1px' }} />
+      )}
       {/* Exercice 1 - Ajouter le bouton "Charger plus" pour le mode non-infini */}
       {!infiniteScroll && hasMore && !loading && (
         <button

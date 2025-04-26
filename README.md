@@ -104,16 +104,21 @@ _Votre réponse pour l'exercice 3 :_
 ### Exercice 4 : Fonctionnalités avancées
 #### Objectif : Ajouter des fonctionnalités de chargement et détail
 
-- [ ] 4.1 Implémenter le chargement infini des posts avec `useIntersectionObserver`
-- [ ] 4.2 Créer le composant `PostDetails` pour afficher les détails d'un post
-- [ ] 4.3 Ajouter la fonctionnalité de filtrage par tags
-- [ ] 4.4 Documenter votre solution ici
+- [x] 4.1 Implémenter le chargement infini des posts avec `useIntersectionObserver`
+- [x] 4.2 Créer le composant `PostDetails` pour afficher les détails d'un post
+- [x] 4.3 Ajouter la fonctionnalité de filtrage par tags
+- [x] 4.4 Documenter votre solution ici
 
 _Votre réponse pour l'exercice 4 :_
 ```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
+- 4.1 : Ajout du défilement infini dans `PostList.js` avec `useIntersectionObserver` pour charger plus de posts automatiquement, et mise à jour de `usePosts.js` pour gérer `fetchPosts` et `hasMore` correctement.
+ - 4.2 : Création de `PostDetails.js` pour afficher les détails d’un post (titre, corps, réactions, utilisateur, tags), avec fetch des données utilisateur via API et gestion des états `userLoading`/`userError`.
+ - 4.3 : Ajout du filtrage par tags dans `PostSearch.js` avec un sélecteur de tags, mise à jour de `usePosts.js` pour gérer le filtrage par `tag`, et intégration dans `App.js` avec `selectedTag` et `onTagClick`.
 ```
+**📸 Screenshots:**
+
+ ![pic6](./public/Screenshots/pic6.png)
+---
 
 ## Structure détaillée du projet
 

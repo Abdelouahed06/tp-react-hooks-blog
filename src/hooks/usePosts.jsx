@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-//  Exercice 2 - Importer useDebounce
+import { useState, useEffect, useCallback, useMemo } from 'react';
+// Exercice 2 - Importer useDebounce
 import useDebounce from './useDebounce';
 
 /**
@@ -14,7 +14,7 @@ import useDebounce from './useDebounce';
 function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {}) {
   // État local pour les posts
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Changed initial state to false
   const [error, setError] = useState(null);
   
   // Exercice 1 - Ajouter les états nécessaires pour la pagination
@@ -23,48 +23,69 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
   const [hasMore, setHasMore] = useState(true);
   
   // TODO: Exercice 4 - Ajouter l'état pour le post sélectionné
+  // Note: This is handled in App.js, not here
   
   // Exercice 2 - Utiliser useDebounce pour le terme de recherche
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   
-  // TODO: Exercice 3 - Utiliser useCallback pour construire l'URL de l'API
-  const buildApiUrl = (skip = 0) => {
+  // Exercice 3 - Utiliser useCallback pour construire l'URL de l'API
+  const buildApiUrl = useCallback((skip = 0) => {
     // Construire l'URL en fonction des filtres
-    return 'https://dummyjson.com/posts';
-  };
+    let url = `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`;
+    
+    // Exercice 4 - Ajouter le filtrage par tag
+    if (tag) {
+      url = `https://dummyjson.com/posts/tag/${encodeURIComponent(tag)}?limit=${limit}&skip=${skip}`;
+    } else if (debouncedSearchTerm) {
+      url = `https://dummyjson.com/posts/search?q=${encodeURIComponent(debouncedSearchTerm)}?limit=${limit}&skip=${skip}`;
+    }
+
+    return url;
+  }, [debouncedSearchTerm, tag, limit]);
   
   // Exercice 1 - Implémenter la fonction pour charger les posts
-  const fetchPosts = async (reset = false) => {
+  const fetchPosts = useCallback(async (reset = false) => {
     try {
       setLoading(true);
-      // Appeler l'API et mettre à jour les états
-      const url = searchTerm 
-        ? `https://dummyjson.com/posts/search?q=${encodeURIComponent(searchTerm)}&limit=${limit}&skip=${reset ? 0 : skip}`
-        : `https://dummyjson.com/posts?limit=${limit}&skip=${reset ? 0 : skip}`;
+      setError(null);
+      const currentSkip = reset ? 0 : skip;
+      const url = buildApiUrl(currentSkip);
       const response = await fetch(url);
       const data = await response.json();
-      setPosts(prev => reset ? data.posts : [...prev, ...data.posts]);
+      const newPosts = data.posts || [];
+      setPosts(prev => (reset ? newPosts : [...prev, ...newPosts]));
       setTotal(data.total);
-      setSkip(prev => reset ? limit : prev + limit);
-      setHasMore(data.posts.length === limit);
+      setSkip(currentSkip + newPosts.length);
+      setHasMore(newPosts.length === limit);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [skip, buildApiUrl]); // Removed loading and hasMore from dependencies
   
   // Exercice 1 - Utiliser useEffect pour charger les posts quand les filtres changent
+  // Updated for Exercice 4 to include tag dependency
   useEffect(() => {
+    if (loading) return; // Prevent fetching while a fetch is in progress
+    setPosts([]);
+    setSkip(0);
+    setHasMore(true);
     fetchPosts(true);
-  }, [debouncedSearchTerm, limit]);
+  }, [debouncedSearchTerm, tag, limit]); // Removed fetchPosts from dependencies
   
-  // TODO: Exercice 4 - Implémenter la fonction pour charger plus de posts
+  // Exercice 3 - Utiliser useMemo pour calculer les tags uniques
+  const uniqueTags = useMemo(() => {
+    const tagsSet = new Set();
+    posts.forEach(post => {
+      post.tags?.forEach(tag => tagsSet.add(tag));
+    });
+    return Array.from(tagsSet);
+  }, [posts]);
   
-  // TODO: Exercice 3 - Utiliser useMemo pour calculer les tags uniques
-  
-  // TODO: Exercice 4 - Implémenter la fonction pour charger un post par son ID
-  
+  // Exercice 4 - Implémenter la fonction pour charger un post par son ID
+  // Note: Not needed since PostDetails fetches the user, and the post is passed directly
+
   return {
     posts,
     loading,
@@ -72,6 +93,7 @@ function usePosts({ searchTerm = '', tag = '', limit = 10, infinite = true } = {
     // Retourner les autres états et fonctions
     hasMore,
     fetchPosts,
+    uniqueTags, // Exercice 3 - Retourner les tags uniques
   };
 }
 
