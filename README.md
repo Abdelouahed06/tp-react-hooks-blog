@@ -50,13 +50,21 @@ Pour chaque exercice :
 - [x] 1.1 Compléter le hook `usePosts` pour récupérer les posts depuis l'API dummyjson.com
 - [x] 1.2 Implémenter le composant `PostList` pour afficher les posts
 - [x] 1.3 Ajouter la fonctionnalité de recherche par titre ou contenu dans `PostSearch`
-- [ ] 1.4 Documenter votre solution ici
+- [x] 1.4 Documenter votre solution ici
 
 _Votre réponse pour l'exercice 1 :_
 ```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
+ - 1.1 : Ajout des états de pagination, logique de récupération, useEffect, et valeurs de retour dans usePosts.js.
+ - 1.2 : Ajout du message "aucun article", rendu des posts, et bouton "Charger plus" dans PostList.js.
+ - 1.3 : Ajout du bouton de réinitialisation de la recherche dans PostSearch.js.
+ - App.js : Ajout de l'importation, utilisation du hook, affichage des erreurs, et props pour PostList.
 ```
+**📸 Screenshots:**
+
+ ![pic1](./public/Screenshots/pic1.png)
+ ![pic2](./public/Screenshots/pic2.png)
+ ![pic3](./public/Screenshots/pic3.png)
+---
 
 ### Exercice 2 : Hooks Personnalisés
 #### Objectif : Créer des hooks réutilisables
